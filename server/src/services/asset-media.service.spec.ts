@@ -357,6 +357,58 @@ describe(AssetMediaService.name, () => {
       );
     });
 
+    it('should record the uploader name from the request for session uploads', async () => {
+      const file = {
+        uuid: 'random-uuid',
+        originalPath: 'fake_path/asset_1.jpeg',
+        mimeType: 'image/jpeg',
+        checksum: Buffer.from('file hash', 'utf8'),
+        originalName: 'asset_1.jpeg',
+        size: 42,
+      };
+
+      mocks.asset.create.mockResolvedValue(assetEntity);
+
+      await sut.uploadAsset(authStub.user1, { ...createDto, uploadedBy: 'Bob' }, file);
+
+      expect(mocks.asset.create).toHaveBeenCalledWith(expect.objectContaining({ uploadedBy: 'Bob' }));
+    });
+
+    it('should record null when no uploader name is given', async () => {
+      const file = {
+        uuid: 'random-uuid',
+        originalPath: 'fake_path/asset_1.jpeg',
+        mimeType: 'image/jpeg',
+        checksum: Buffer.from('file hash', 'utf8'),
+        originalName: 'asset_1.jpeg',
+        size: 42,
+      };
+
+      mocks.asset.create.mockResolvedValue(assetEntity);
+
+      await sut.uploadAsset(authStub.user1, createDto, file);
+
+      expect(mocks.asset.create).toHaveBeenCalledWith(expect.objectContaining({ uploadedBy: null }));
+    });
+
+    it('should record the API key name over any name sent in the request', async () => {
+      const file = {
+        uuid: 'random-uuid',
+        originalPath: 'fake_path/asset_1.jpeg',
+        mimeType: 'image/jpeg',
+        checksum: Buffer.from('file hash', 'utf8'),
+        originalName: 'asset_1.jpeg',
+        size: 42,
+      };
+      const auth = { ...authStub.user1, apiKey: { id: 'key-1', name: 'Alice', permissions: [] } };
+
+      mocks.asset.create.mockResolvedValue(assetEntity);
+
+      await sut.uploadAsset(auth, { ...createDto, uploadedBy: 'Mallory' }, file);
+
+      expect(mocks.asset.create).toHaveBeenCalledWith(expect.objectContaining({ uploadedBy: 'Alice' }));
+    });
+
     it('should handle a duplicate', async () => {
       const file = {
         uuid: 'random-uuid',

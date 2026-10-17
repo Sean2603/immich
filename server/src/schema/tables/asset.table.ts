@@ -86,6 +86,9 @@ export class AssetTable {
   @Column({ type: 'integer', nullable: true })
   duration!: number | null;
 
+  @Column({ type: 'character varying', nullable: true })
+  uploadedBy!: string | null;
+
   @Column({ type: 'bytea', index: true })
   checksum!: Buffer; // sha1 checksum
 

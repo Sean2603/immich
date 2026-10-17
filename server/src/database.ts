@@ -57,6 +57,7 @@ export type Library = {
 
 export type AuthApiKey = {
   id: string;
+  name: string;
   permissions: Permission[];
 };
 
@@ -314,6 +315,7 @@ export const columns = {
   searchAsset: [
     'asset.id',
     'asset.updateId',
+    'asset.uploadedBy',
     'asset.createdAt',
     'asset.updatedAt',
     'asset.deletedAt',
@@ -377,7 +379,7 @@ export const columns = {
     'asset_file.isTransparent',
   ],
   authUser: ['user.id', 'user.name', 'user.email', 'user.isAdmin', 'user.quotaUsageInBytes', 'user.quotaSizeInBytes'],
-  authApiKey: ['api_key.id', 'api_key.permissions'],
+  authApiKey: ['api_key.id', 'api_key.name', 'api_key.permissions'],
   authSession: ['session.id', 'session.updatedAt', 'session.pinExpiresAt', 'session.appVersion'],
   user: userColumns,
   user2: user2Columns,

@@ -20841,6 +20841,12 @@
             "format": "binary",
             "type": "string"
           },
+          "uploadedBy": {
+            "description": "Name of the person uploading. Ignored when uploading with an API key, which uses the key name instead",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
           "visibility": {
             "$ref": "#/components/schemas/AssetVisibility"
           }
@@ -21343,6 +21349,11 @@
           "updatedAt": {
             "description": "The UTC timestamp when the asset record was last updated in the database. This is automatically maintained by the database and reflects when any field in the asset was last modified.",
             "format": "date-time",
+            "type": "string"
+          },
+          "uploadedBy": {
+            "description": "Name of the person who uploaded the asset",
+            "nullable": true,
             "type": "string"
           },
           "visibility": {

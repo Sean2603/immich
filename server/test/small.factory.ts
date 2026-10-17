@@ -79,6 +79,7 @@ const authSharedLinkFactory = (sharedLink: Partial<AuthSharedLink> = {}) => {
 
 const authApiKeyFactory = (apiKey: Partial<AuthApiKey> = {}) => ({
   id: newUuid(),
+  name: 'api-key',
   permissions: [Permission.All],
   ...apiKey,
 });

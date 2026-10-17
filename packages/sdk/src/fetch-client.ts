@@ -1061,6 +1061,8 @@ export type AssetMediaCreateDto = {
     metadata?: AssetMetadataUpsertItemDto[];
     /** Sidecar file data */
     sidecarData?: Blob;
+    /** Name of the person uploading. Ignored when uploading with an API key, which uses the key name instead */
+    uploadedBy?: string;
     visibility?: AssetVisibility;
 };
 export type AssetMediaResponseDto = {
@@ -1341,6 +1343,8 @@ export type AssetResponseDto = {
     "type": AssetTypeEnum;
     /** The UTC timestamp when the asset record was last updated in the database. This is automatically maintained by the database and reflects when any field in the asset was last modified. */
     updatedAt: string;
+    /** Name of the person who uploaded the asset */
+    uploadedBy?: string | null;
     visibility: AssetVisibility;
     /** Asset width */
     width: number | null;

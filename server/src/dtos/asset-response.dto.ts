@@ -66,6 +66,7 @@ export const AssetResponseSchema = SanitizedAssetResponseSchema.extend(
       .meta({ format: 'date-time' })
       .describe('The UTC timestamp when the asset was originally uploaded to Immich.'),
     ownerId: z.uuidv4().describe('Owner user ID'),
+    uploadedBy: z.string().nullish().describe('Name of the person who uploaded the asset'),
     owner: UserResponseSchema.optional(),
     libraryId: z
       .uuidv4()
@@ -146,6 +147,7 @@ export type MapAsset = {
   originalPath: string;
   owner?: ShallowDehydrateObject<User> | null;
   ownerId: string;
+  uploadedBy: string | null;
   stack?: (ShallowDehydrateObject<Stack> & { assets: Stack['assets'] }) | null;
   stackId: string | null;
   tags?: ShallowDehydrateObject<Tag>[];
@@ -213,6 +215,7 @@ export function mapAsset(entity: MaybeDehydrated<MapAsset>, options: AssetMapOpt
     id: entity.id,
     createdAt: asDateTimeString(entity.createdAt),
     ownerId: entity.ownerId,
+    uploadedBy: entity.uploadedBy,
     owner: entity.owner ? mapUser(entity.owner) : undefined,
     libraryId: entity.libraryId,
     type: entity.type,

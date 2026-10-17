@@ -67,6 +67,7 @@ export class AssetFactory {
       originalFileName,
       originalPath: `/data/library/${originalFileName}`,
       ownerId: newUuid(),
+      uploadedBy: null,
       stackId: null,
       thumbhash: null,
       type: AssetType.Image,
